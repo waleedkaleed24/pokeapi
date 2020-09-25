@@ -1,0 +1,9 @@
+.hallo {
+    background-color: red;
+    margin-bottom: 30px;
+    width: 100%;
+    min-height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
