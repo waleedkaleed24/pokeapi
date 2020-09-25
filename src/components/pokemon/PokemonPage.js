@@ -6,6 +6,7 @@ import LoadingImg from "./assets/loading.gif";
 
 const PokemonPage = () => {
   let { id } = useParams();
+  const [currentPageUrl, setCurrentPageUrl] = useState([]);
   const [pokemonDetails, setPokemonDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [image, setImage] = useState([]);
@@ -13,11 +14,14 @@ const PokemonPage = () => {
   const [abilitie, setAbilities] = useState([]);
   const [type, setTypes] = useState([]);
   const [move, setMoves] = useState([]);
-
+  setCurrentPageUrl (`https://pokeapi.co/api/v2/pokemon/${id}`)
   useEffect(() => {
     setIsLoading(true);
+    let cancel;
     const fetchDetailsPage = async () => {
-      const response = await axios(`https://pokeapi.co/api/v2/pokemon/${id}`);
+      const response = await axios(currentPageUrl, {
+        cancelToken: new axios.CancelToken((c) => (cancel = c)),
+      });
       setIsLoading(false);
       //Set Pokemon data
       setPokemonDetails(response.data);
@@ -79,12 +83,10 @@ const PokemonPage = () => {
           </p>
         )),
       );
-
-      console.log(response.data);
-      console.log(abilitie);
     };
     fetchDetailsPage();
-  }, []);
+    return () => cancel();
+  }, [currentPageUrl]);
 
   // const [species, setSpecies] = useState([])
 
