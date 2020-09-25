@@ -4,11 +4,9 @@ import Pokemon from "./Pokemon";
 import Pagination from "../ui/Pagination/index";
 
 const Index = () => {
+  const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon/?offset=500&limit=500");
   const [pokemon, setPokemon] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPageUrl, setCurrentPageUrl] = useState(
-    "https://pokeapi.co/api/v2/pokemon/?offset=500&limit=500",
-  );
   const [nextPageUrl, setNextPageUrl] = useState();
   const [prevPageUrl, setPrevPageUrl] = useState();
 
@@ -31,13 +29,15 @@ const Index = () => {
     return () => cancel();
   }, [currentPageUrl]);
 
-  function gotoNextPage() {
+  const gotoNextPage = () => {
     setCurrentPageUrl(nextPageUrl);
   }
 
   function gotoPrevPage() {
     setCurrentPageUrl(prevPageUrl);
   }
+
+
 
   return (
     <>
