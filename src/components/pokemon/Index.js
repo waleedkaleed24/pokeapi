@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Pokemon from "./Pokemon";
-import Pagination from "../ui/Pagination/index";
+import React, { useState, useEffect } from "react"
+import axios from "axios"
+import Pokemon from "./Pokemon"
+import Pagination from "../ui/Pagination/index"
 
 const Index = () => {
-  const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon/?offset=500&limit=500");
+  const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon/?limit=100");
   const [pokemon, setPokemon] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [nextPageUrl, setNextPageUrl] = useState();
@@ -23,12 +23,13 @@ const Index = () => {
 
       // this is a loop to throw of all name
       setPokemon(response.data.results.map((pokemon) => pokemon));
+    
     };
     fetchPokemonData();
-
+    
     return () => cancel();
   }, [currentPageUrl]);
-
+  
   const gotoNextPage = () => {
     setCurrentPageUrl(nextPageUrl);
   }
@@ -42,10 +43,7 @@ const Index = () => {
   return (
     <>
       <Pokemon isLoading={isLoading} pokemon={pokemon} />
-      <Pagination
-        gotoNextPage={nextPageUrl ? gotoNextPage : null}
-        gotoPrevPage={prevPageUrl ? gotoPrevPage : null}
-      />
+      <Pagination gotoNextPage={nextPageUrl ? gotoNextPage : null} gotoPrevPage={prevPageUrl ? gotoPrevPage : null} />
     </>
   );
 };
